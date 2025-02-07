@@ -1,0 +1,19 @@
+prio high to low
+ 
+lstmap, 
+
+cc -g
+gdb ./a.out
+
+break ft_strlcat.c:16
+
+p = c_len = print
+
+s to step into function
+
+n = nextline
+
+alway break before the watch of breakpoint
+b ft_split.c:63 if strcmp(s_list[0], "Hello") == 0
+
+valgrind

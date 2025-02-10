@@ -6,7 +6,7 @@
 /*   By: masmit <masmit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 19:49:45 by masmit            #+#    #+#             */
-/*   Updated: 2025/02/10 16:35:31 by masmit           ###   ########.fr       */
+/*   Updated: 2025/02/10 18:39:01 by masmit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "minitalk.h"
 
-void send_bit(int server_pid, short bit)
+void	send_bit(int server_pid, short bit)
 {
 	if (bit == 1)
 		kill(server_pid, SIGUSR1);
@@ -23,13 +23,26 @@ void send_bit(int server_pid, short bit)
 	usleep(100);
 }
 
-// void send_message()
-// {
+void	send_message(int server_pid, char *message)
+{
+	int	i;
+	int	bit;
 
-// }
+	while (message[i])
+	{
+		bit = 7;
+		while (bit >= 0)
+		{
+			send_bit(server_pid, (message[i] >> bit) & 1);
+			bit--;
+		}
+		i++;
+	}
+	ft_printf("Message has been sent...\n");
+}
 
 // least significant bit first;
-void send_length(int server_pid, uint32_t message_length)
+void	send_length(int server_pid, uint32_t message_length)
 {
 	int	bit;
 
@@ -39,10 +52,10 @@ void send_length(int server_pid, uint32_t message_length)
 		send_bit(server_pid, (message_length >> bit) & 1);
 		bit--;
 	}
-	ft_printf("Message length has been sent...");
+	ft_printf("Message length has been sent...\n");
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	__pid_t		server_pid;
 	uint32_t	message_length;
@@ -57,7 +70,7 @@ int main(int argc, char **argv)
 	while (argv[2][message_length])
 		message_length++;
 	send_length(server_pid, message_length);
-	// send_length(server_pid, argv[2]);
+	send_message(server_pid, argv[2]);
 	ft_printf("Signal sent to PID <%d>\n", server_pid);
 	return (0);
 }

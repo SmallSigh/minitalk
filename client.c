@@ -22,7 +22,7 @@ void	send_bit(pid_t server_pid, int bit)
 		kill(server_pid, SIGUSR1);
 	else
 		kill(server_pid, SIGUSR2);
-	usleep(100);
+	usleep(500);
 }
 
 void	send_number(pid_t server_pid, int num)

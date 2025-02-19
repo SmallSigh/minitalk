@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: masmit <masmit@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 17:18:10 by masmit            #+#    #+#             */
+/*   Updated: 2025/02/19 17:18:10 by masmit           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -10,15 +22,19 @@ void	send_bit(pid_t server_pid, int bit)
 		kill(server_pid, SIGUSR1);
 	else
 		kill(server_pid, SIGUSR2);
-	usleep(100);  // Small delay to prevent signals from being lost
+	usleep(100);
 }
 
 void	send_number(pid_t server_pid, int num)
 {
 	int	bit;
 
-	for (bit = 31; bit >= 0; bit--)  // Send as a 32-bit integer
+	bit = 31;
+	while (bit >= 0)
+	{
 		send_bit(server_pid, (num >> bit) & 1);
+		bit--;
+	}
 }
 
 void	send_message(pid_t server_pid, char *message)
@@ -29,31 +45,33 @@ void	send_message(pid_t server_pid, char *message)
 	i = 0;
 	while (message[i])
 	{
-		for (bit = 7; bit >= 0; bit--)  // Send each character as 8 bits
+		bit = 7;
+		while (bit >= 0)
+		{
 			send_bit(server_pid, (message[i] >> bit) & 1);
+			bit--;
+		}
 		i++;
 	}
 }
 
 int	main(int argc, char **argv)
 {
+	pid_t	server_pid;
+	int		message_length;
+
 	if (argc != 3)
 	{
 		printf("Usage: %s <server_pid> <message>\n", argv[0]);
 		return (1);
 	}
-
-	pid_t	server_pid = atoi(argv[1]);
-	int		message_length = 0;
-
-	while (argv[2][message_length])  // Count message length
+	message_length = 0;
+	server_pid = atoi(argv[1]);
+	while (argv[2][message_length])
 		message_length++;
-
 	printf("Sending length: %d\n", message_length);
-	send_number(server_pid, message_length);  // Send message length in binary
-
+	send_number(server_pid, message_length);
 	printf("Sending message: %s\n", argv[2]);
-	send_message(server_pid, argv[2]);  // Send actual message in binary
-
+	send_message(server_pid, argv[2]);
 	return (0);
 }

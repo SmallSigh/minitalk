@@ -22,7 +22,7 @@ void	send_bit(pid_t server_pid, int bit)
 		kill(server_pid, SIGUSR1);
 	else
 		kill(server_pid, SIGUSR2);
-	usleep(500);
+	usleep(100);
 }
 
 void	send_number(pid_t server_pid, int num)
@@ -55,23 +55,23 @@ void	send_message(pid_t server_pid, char *message)
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
 	pid_t	server_pid;
 	int		message_length;
 
-	if (argc != 3)
+	if (ac != 3)
 	{
-		printf("Usage: %s <server_pid> <message>\n", argv[0]);
+		printf("Usage: %s <server_pid> <message>\n", av[0]);
 		return (1);
 	}
 	message_length = 0;
-	server_pid = atoi(argv[1]);
-	while (argv[2][message_length])
+	server_pid = atoi(av[1]);
+	while (av[2][message_length])
 		message_length++;
 	printf("Sending length: %d\n", message_length);
 	send_number(server_pid, message_length);
-	printf("Sending message: %s\n", argv[2]);
-	send_message(server_pid, argv[2]);
+	printf("Sending message: %s\n", av[2]);
+	send_message(server_pid, av[2]);
 	return (0);
 }

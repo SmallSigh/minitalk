@@ -10,11 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdio.h>
+#include "minitalk.h"
+
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	negative;
+	int	result;
+
+	i = 0;
+	negative = 1;
+	result = 0;
+	while (nptr[i] == ' ' || nptr[i] == '\t' || nptr[i] == '\n'
+		|| nptr[i] == '\v' || nptr[i] == '\f' || nptr[i] == '\r')
+		i++;
+	while (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			negative = negative * -1;
+		if ((nptr[i] == '-' || nptr[i] == '+')
+			&& (nptr[i + 1] == '-' || nptr[i + 1] == '+'))
+			return (0);
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		result = (result * 10) + negative * (nptr[i] - '0');
+		i++;
+	}
+	return (result);
+}
 
 void	send_bit(pid_t server_pid, int bit)
 {
@@ -62,16 +87,16 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		printf("Usage: %s <server_pid> <message>\n", av[0]);
+		ft_printf("Usage: %s <server_pid> <message>\n", av[0]);
 		return (1);
 	}
 	message_length = 0;
-	server_pid = atoi(av[1]);
+	server_pid = ft_atoi(av[1]);
 	while (av[2][message_length])
 		message_length++;
-	printf("Sending length: %d\n", message_length);
+	ft_printf("Sending length: %d\n", message_length);
 	send_number(server_pid, message_length);
-	printf("Sending message: %s\n", av[2]);
+	ft_printf("Sending message: %s\n", av[2]);
 	send_message(server_pid, av[2]);
 	return (0);
 }

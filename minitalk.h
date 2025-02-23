@@ -6,13 +6,14 @@
 /*   By: masmit <masmit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 17:10:42 by masmit            #+#    #+#             */
-/*   Updated: 2025/02/23 16:02:30 by masmit           ###   ########.fr       */
+/*   Updated: 2025/02/23 17:15:10 by masmit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 
+# include "printf/ft_printf.h"
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>

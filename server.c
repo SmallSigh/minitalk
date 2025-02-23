@@ -6,7 +6,7 @@
 /*   By: masmit <masmit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:07:18 by masmit            #+#    #+#             */
-/*   Updated: 2025/02/19 17:10:13 by masmit           ###   ########.fr       */
+/*   Updated: 2025/02/23 16:10:21 by masmit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	handle_message_length(t_server *server_info, int received_bit)
 	server_info->bit++;
 	if (server_info->bit == 32)
 	{
-		printf("Received message length: %d\n", server_info->message_length);
+		ft_printf("Received message length: %d\n", server_info->message_length);
 		server_info->message = malloc(server_info->message_length + 1);
 		if (!server_info->message)
 		{
-			printf("Memory allocation failed.\n");
+			ft_printf("Memory allocation failed.\n");
 			exit(1);
 		}
 		server_info->message[server_info->message_length] = '\0';
@@ -44,7 +44,7 @@ void	handle_message_data(t_server *server_info, int received_bit)
 		server_info->cur_char = 0;
 		if (server_info->char_index == server_info->message_length)
 		{
-			printf("%s\n", server_info->message);
+			ft_printf("%s\n", server_info->message);
 			if (server_info->message)
 			{
 				free(server_info->message);
@@ -82,7 +82,7 @@ int	main(void)
 	pid_t				pid;
 
 	pid = getpid();
-	printf("Server PID = <%d>\n", pid);
+	ft_printf("Server PID = <%d>\n", pid);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = signal_handler;
 	sigemptyset(&sa.sa_mask);

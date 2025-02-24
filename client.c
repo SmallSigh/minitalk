@@ -41,13 +41,16 @@ int	ft_atoi(const char *nptr)
 	return (result);
 }
 
+// sends number first, and sends actual text(only one string) afterwards.
+// send data in big endian.
+
 void	send_bit(pid_t server_pid, int bit)
 {
 	if (bit == 1)
 		kill(server_pid, SIGUSR1);
 	else
 		kill(server_pid, SIGUSR2);
-	usleep(500);
+	usleep(300);
 }
 
 void	send_number(pid_t server_pid, int num)

@@ -1,13 +1,13 @@
-having trouble with Makefile
+documentation list:
 
-compile with:
+qnx website to explain the sigaction struct, its components and uses.
+https://tinyurl.com/347wcdx8
 
-for client_side
+Little and big endian explained, for coding and decoding data into and from bits.
+https://betterexplained.com
 
-cc client.c printf/ft_printf.c printf/printBasics.c printf/printHex.c printf/printNumbers.c -o client
+to article
+https://tinyurl.com/wjj3c2uk
 
-for server_side
-
-cc server.c printf/ft_printf.c printf/printBasics.c printf/printHex.c printf/printNumbers.c -o server
-
-if after receiving message length there is no message, the sleep needs to be adjusted.
+Lorem Ipsum, tride and true for large amounts of text.
+https://www.lipsum.com/
